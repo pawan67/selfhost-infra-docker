@@ -1,6 +1,7 @@
 include:
   - apps/authelia/compose.yaml
   - apps/traefik/compose.yaml
+  - apps/audiobookshelf/compose.yaml
 
 networks:
   default:
