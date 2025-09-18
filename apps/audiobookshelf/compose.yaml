@@ -1,0 +1,21 @@
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    restart: unless-stopped
+    volumes:
+      - ./data/audiobookshelf/config:/config
+      - ./data/audiobookshelf/metadata:/metadata
+      - ./data/audiobookshelf/audiobooks:/audiobooks
+      - ./data/audiobookshelf/podcasts:/podcasts
+    expose:
+      - 80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.audiobookshelf.rule=Host(`${AUDIOBOOKSHELF_HOSTNAME?}`)"
+      - "traefik.http.routers.audiobookshelf.entrypoints=websecure"
+      - "traefik.http.routers.audiobookshelf.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.audiobookshelf.middlewares=authelia@docker"
+    profiles:
+      - audiobookshelf
+      - all

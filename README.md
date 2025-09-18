@@ -62,7 +62,7 @@ The stack is modular — you can add or remove services as you like.
 
 6. Check your setup
 
-   - Make sure you’re in the repo root (`pwd` should show `/opt/selfhost-infra-docker`)
+   - Make sure you’re in the repo root (`pwd` should show `/opt/docker`)
    - Run all enabled profiles:
 
      ```bash
