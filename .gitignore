@@ -1,0 +1,15 @@
+# Ignore all env files
+.env
+**/.env
+
+# Ignore persistent data folders
+data/
+apps/*/data/
+
+# Ignore logs
+*.log
+**/*.log
+
+
+
+

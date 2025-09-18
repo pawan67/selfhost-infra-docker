@@ -1,0 +1,8 @@
+include:
+  - apps/authelia/compose.yaml
+  - apps/traefik/compose.yaml
+
+networks:
+  default:
+    name: ${DOCKER_NETWORK:-p67_default}
+    external: ${DOCKER_NETWORK_EXTERNAL:-false}
