@@ -12,7 +12,10 @@
 
 # Data folders
 data/authelia
+<<<<<<< HEAD
 data/traefik
+=======
+>>>>>>> cc66796b92a7fd061afdce4df7ed5d6b8861e0e4
 
 
 
