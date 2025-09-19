@@ -10,5 +10,8 @@
 **/*.log
 
 
+# Data folders
+data/authelia
+
 
 

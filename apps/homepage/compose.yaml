@@ -8,6 +8,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     expose:
       - 3000
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_HOSTNAME?}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homepage.rule=Host(`${HOMEPAGE_HOSTNAME?}`)"
