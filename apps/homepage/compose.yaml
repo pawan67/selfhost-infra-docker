@@ -1,0 +1,19 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DATA_DIR}/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    expose:
+      - 3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homepage.rule=Host(`${HOMEPAGE_HOSTNAME?}`)"
+      - "traefik.http.routers.homepage.entrypoints=websecure"
+      - "traefik.http.routers.homepage.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.homepage.middlewares=authelia@docker"
+    profiles:
+      - homepage
+      - all

@@ -2,9 +2,8 @@
 .env
 **/.env
 
-# Ignore persistent data folders
-data/
-apps/*/data/
+ 
+ 
 
 # Ignore logs
 *.log

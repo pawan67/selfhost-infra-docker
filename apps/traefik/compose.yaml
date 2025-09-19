@@ -66,6 +66,11 @@ services:
       - "traefik.http.routers.api.tls.certresolver=letsencrypt"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.middlewares=authelia@docker"
+      - "homepage.group=Infrastructure"
+      - "homepage.name=Traefik"
+      - "homepage.icon=traefik"
+      - "homepage.href=https://${TRAEFIK_HOSTNAME?}"
+      - "homepage.description=Reverse Proxy"
     healthcheck:
       test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 10s

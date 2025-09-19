@@ -1,0 +1,25 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/services
+
+- Media Services:
+    - Audiobookshelf:
+        href: https://${AUDIOBOOKSHELF_HOSTNAME}
+        description: Self-hosted audiobook and podcast server
+        icon: /icons/audiobookshelf.png
+
+- Infrastructure:
+    - Traefik:
+        href: https://${TRAEFIK_HOSTNAME}
+        description: Reverse Proxy
+        icon: /icons/traefik.png
+    - Authelia:
+        href: https://${AUTHELIA_HOSTNAME}
+        description: Authentication Server
+        icon: /icons/authelia.png
+
+- Dashboard:
+    - Homepage:
+        href: https://${HOMEPAGE_HOSTNAME}
+        description: Application Dashboard
+        icon: /icons/homepage.png

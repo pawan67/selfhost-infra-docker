@@ -4,10 +4,10 @@ services:
     container_name: audiobookshelf
     restart: unless-stopped
     volumes:
-      - ./data/audiobookshelf/config:/config
-      - ./data/audiobookshelf/metadata:/metadata
-      - ./data/audiobookshelf/audiobooks:/audiobooks
-      - ./data/audiobookshelf/podcasts:/podcasts
+      - ${DOCKER_DATA_DIR}/audiobookshelf/config:/config
+      - ${DOCKER_DATA_DIR}/audiobookshelf/metadata:/metadata
+      - ${DOCKER_DATA_DIR}/audiobookshelf/audiobooks:/audiobooks
+      - ${DOCKER_DATA_DIR}/audiobookshelf/podcasts:/podcasts
     expose:
       - 80
     labels:
@@ -16,6 +16,11 @@ services:
       - "traefik.http.routers.audiobookshelf.entrypoints=websecure"
       - "traefik.http.routers.audiobookshelf.tls.certresolver=letsencrypt"
       - "traefik.http.routers.audiobookshelf.middlewares=authelia@docker"
+      - "homepage.group=Media"
+      - "homepage.name=Audiobookshelf"
+      - "homepage.icon=audiobookshelf"
+      - "homepage.href=https://${AUDIOBOOKSHELF_HOSTNAME?}"
+      - "homepage.description=Self-hosted audiobook and podcast server"
     profiles:
       - audiobookshelf
       - all
