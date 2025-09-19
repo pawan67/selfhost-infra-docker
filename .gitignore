@@ -13,6 +13,7 @@
 # Data folders
 data/authelia
 data/traefik
+data/audiobookshelf
 
 
 
