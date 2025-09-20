@@ -1,0 +1,26 @@
+services:
+  cloudflare-ddns:
+    image: favonia/cloudflare-ddns:1
+    container_name: cloudflare-ddns
+    restart: unless-stopped
+    user: "${PUID}:${PGID}"
+    network_mode: host
+    read_only: true
+    cap_drop: [all]
+    security_opt: [no-new-privileges:true]
+    environment:
+      CLOUDFLARE_API_TOKEN: "${CLOUDFLARE_API_TOKEN}"
+      PROXIED: false
+      DOMAINS: >
+        ${AUTHELIA_HOSTNAME},
+        ${TRAEFIK_HOSTNAME},
+        ${HOMEPAGE_HOSTNAME},
+        ${UPTIME_KUMA_HOSTNAME},
+        ${N8N_HOSTNAME},
+        ${GLANCE_HOSTNAME},
+        ${AUDIOBOOKSHELF_HOSTNAME}
+        
+
+    profiles:
+      - cloudflare-ddns
+      - all

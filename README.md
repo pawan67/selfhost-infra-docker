@@ -246,7 +246,7 @@ Each service has its own `.env` file in `apps/{service-name}/`. Common variables
 ---
 
 ## Notes
-
+- Using Cloudflare DDNS is recommended check .env
 - Some services need extra steps (like adding API keys or editing configs) — check their `README.md` inside `apps/{service}`
 - Ports **80** and **443** must stay open
 - Always run commands from the repository root directory (`/opt/selfhost-infra-docker`)
