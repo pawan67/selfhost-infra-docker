@@ -1,20 +1,22 @@
 services:
   n8n:
-    image: n8nio/n8n:latest
+    image: docker.n8n.io/n8nio/n8n
     container_name: n8n
-    restart: unless-stopped
+    restart: always
     ports:
       - 5678:5678
     volumes:
-      - ${DOCKER_DATA_DIR}/n8n:/home/node/.n8n
+      - n8n_data:/home/node/.n8n
+      - n8n_files:/files
     environment:
       - N8N_HOST=${N8N_HOSTNAME?}
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
+      - N8N_RUNNERS_ENABLED=true
       - NODE_ENV=production
-      # needed so n8n knows its external URL
-      - WEBHOOK_URL=https://${N8N_HOSTNAME?}/
-
+      - WEBHOOK_URL=${N8N_HOSTNAME?}
+      - GENERIC_TIMEZONE=${TZ}
+      - TZ=${TZ}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.n8n.rule=Host(`${N8N_HOSTNAME?}`)"
@@ -26,7 +28,12 @@ services:
       - "homepage.icon=n8n"
       - "homepage.href=https://${N8N_HOSTNAME?}"
       - "homepage.description=Workflow Automation Tool"
-
     profiles:
       - n8n
       - all
+
+volumes:
+  n8n_data:
+    driver: local
+  n8n_files:
+    driver: local
