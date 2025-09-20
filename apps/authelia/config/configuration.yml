@@ -765,7 +765,15 @@ access_control:
       policy: "bypass"
 
     - domain: '*.{{ env "TEMPLATE_DOMAIN" }}'
+      networks:
+        - '{{ env "HOST_PUBLIC_IP" }}/32'
+        
+      policy: bypass
+
+    - domain: '*.{{ env "TEMPLATE_DOMAIN" }}'        
       policy: "two_factor"
+
+    
 
     ## root domain
     - domain: '{{ env "TEMPLATE_DOMAIN" }}'

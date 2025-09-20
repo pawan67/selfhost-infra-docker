@@ -5,6 +5,7 @@ include:
   - apps/homepage/compose.yaml
   - apps/n8n/compose.yaml
   - apps/uptime-kuma/compose.yaml
+  - apps/glance/compose.yaml
 
 networks:
   default:

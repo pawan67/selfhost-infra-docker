@@ -5,6 +5,14 @@ It uses **Traefik** as a reverse proxy and **Authelia** for authentication.
 
 The stack is modular — you can add or remove services as you like.
 
+## 🖼️ Screenshots
+
+### Homepage Dashboard
+![Homepage Dashboard](data/homepage/images/screenshot.png)
+
+### Glance Overview
+![Glance Overview](apps/glance/screenshots/screenshot-1.png)
+
 ---
 
 ## Prerequisites
@@ -21,58 +29,235 @@ The stack is modular — you can add or remove services as you like.
 
 ## Setup
 
-1. Install Docker
+### 1. Install Docker
 
+```bash
+curl -fsSL https://get.docker.com | sh
+```
+
+### 2. Clone this repository
+
+```bash
+cd /opt
+git clone https://github.com/pawan67/selfhost-infra-docker.git
+cd selfhost-infra-docker
+```
+
+### 3. Set proper permissions
+
+You can change the permissions of the `/opt/selfhost-infra-docker` directory to your user using the following command:
+
+```bash
+sudo chown $(id -u):$(id -g) -R /opt/selfhost-infra-docker
+```
+
+This will allow you to edit files in the directory without needing to use `sudo`.
+
+### 4. Configure environment variables
+
+- Copy `.env.example` files into `.env` for each app you want to run
+- Edit values with your domain, secrets, tokens, etc.
+
+#### Using nano (command line):
+```bash
+nano apps/audiobookshelf/.env
+```
+
+#### Using VS Code (recommended):
+```bash
+# Install VS Code if not already installed
+curl -fsSL https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64 -o vscode.deb
+sudo dpkg -i vscode.deb
+
+# Open the project in VS Code
+code /opt/selfhost-infra-docker
+```
+
+**VS Code Benefits:**
+- Syntax highlighting for configuration files
+- Easy file navigation
+- Multiple files open in tabs
+- Built-in terminal
+- Extensions for Docker and YAML support
+
+### 5. Start the core services (**Traefik** + **Authelia**)
+
+```bash
+docker compose --profile required up -d
+```
+
+### 6. Enable more services
+
+- Add them to the `COMPOSE_PROFILES` variable in the root `.env`
+- Or run them on demand with:
+
+  ```bash
+  docker compose --profile grafana --profile audiobookshelf up -d
+  ```
+
+### 7. Check your setup
+
+- Make sure you're in the repo root (`pwd` should show `/opt/selfhost-infra-docker`)
+- Run all enabled profiles:
+
+  ```bash
+  docker compose up -d
+  ```
+
+---
+
+## 🐳 Docker Management
+
+### Common Commands
+
+#### View running containers
+```bash
+docker compose ps
+```
+
+#### View logs
+```bash
+# All services
+docker compose logs
+
+# Specific service
+docker compose logs traefik
+
+# Follow logs in real-time
+docker compose logs -f authelia
+```
+
+#### Restart services
+```bash
+# Restart all services
+docker compose restart
+
+# Restart specific service
+docker compose restart traefik
+
+# Restart with profile
+docker compose --profile grafana restart
+```
+
+#### Stop services
+```bash
+# Stop all services
+docker compose stop
+
+# Stop specific service
+docker compose stop audiobookshelf
+
+# Stop and remove containers
+docker compose down
+```
+
+#### Update services
+```bash
+# Pull latest images
+docker compose pull
+
+# Restart with new images
+docker compose up -d
+```
+
+#### Clean up
+```bash
+# Remove stopped containers, unused networks, and dangling images
+docker system prune
+
+# Remove unused volumes (be careful!)
+docker volume prune
+```
+
+### Service Management
+
+#### Add a new service
+1. Enable the profile in your root `.env` file:
    ```bash
-   curl -fsSL https://get.docker.com | sh
+   COMPOSE_PROFILES=required,grafana,audiobookshelf,newservice
+   ```
+2. Start the new service:
+   ```bash
+   docker compose up -d
    ```
 
-2. Clone this repository
-
+#### Remove a service
+1. Stop and remove the service:
    ```bash
-   cd /opt
-   git clone https://github.com/pawan67/selfhost-infra-docker.git
-   cd selfhost-infra-docker
+   docker compose stop servicename
+   docker compose rm servicename
    ```
+2. Remove from `COMPOSE_PROFILES` in `.env`
 
-3. Configure environment variables
+### Troubleshooting
 
-   - Copy `.env.example` files into `.env` for each app you want to run
-   - Edit values with your domain, secrets, tokens, etc.
-   - Example using nano:
+#### Check service health
+```bash
+# View container status
+docker compose ps
 
-     ```bash
-     nano apps/audiobookshelf/.env
-     ```
+# Check specific service logs
+docker compose logs servicename
 
-4. Start the core services (**Traefik** + **Authelia**)
+# Enter container shell for debugging
+docker compose exec servicename /bin/bash
+# or
+docker compose exec servicename /bin/sh
+```
 
-   ```bash
-   docker compose --profile required up -d
-   ```
+#### Resource usage
+```bash
+# View resource usage
+docker stats
 
-5. Enable more services
+# View disk usage
+docker system df
+```
 
-   - Add them to the `COMPOSE_PROFILES` variable in the root `.env`
-   - Or run them on demand with:
+---
 
-     ```bash
-     docker compose --profile grafana --profile audiobookshelf up -d
-     ```
+## 📝 Configuration Tips
 
-6. Check your setup
+### Editing Configuration Files
 
-   - Make sure you’re in the repo root (`pwd` should show `/opt/docker`)
-   - Run all enabled profiles:
+**Command Line:**
+```bash
+# Using nano
+nano apps/service-name/.env
 
-     ```bash
-     docker compose up -d
-     ```
+# Using vim
+vim apps/service-name/.env
+```
+
+**VS Code (Recommended):**
+- Install the Docker extension for better Docker Compose support
+- Install the YAML extension for better syntax highlighting
+- Use `Ctrl+Shift+P` → "Docker: Compose Up" for GUI management
+
+### Environment Variables
+
+Each service has its own `.env` file in `apps/{service-name}/`. Common variables include:
+- `DOMAIN` - Your domain name
+- `SUBDOMAIN` - Service subdomain
+- `TIMEZONE` - Your timezone (e.g., `America/New_York`)
+- `PUID` and `PGID` - User/Group IDs (run `id` to get yours)
+
 
 ---
 
 ## Notes
 
-- If you’re not using Cloudflare DDNS, create the DNS A records for each service manually
 - Some services need extra steps (like adding API keys or editing configs) — check their `README.md` inside `apps/{service}`
 - Ports **80** and **443** must stay open
+- Always run commands from the repository root directory (`/opt/selfhost-infra-docker`)
+- Use `docker compose logs servicename` to troubleshoot issues
+- Keep your `.env` files secure and never commit them to version control
+
+---
+
+## 🆘 Support
+
+- Check individual service documentation in `apps/{service}/README.md`
+- Review Docker Compose logs for error messages
+- Ensure DNS records are properly configured
+- Verify firewall settings allow ports 80 and 443

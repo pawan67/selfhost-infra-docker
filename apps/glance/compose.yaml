@@ -1,0 +1,32 @@
+services:
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config
+    ports:
+      - 8080:8080
+    environment:
+      - AUDIOBOOKSHELF_HOSTNAME=${AUDIOBOOKSHELF_HOSTNAME?}
+      - TRAEFIK_HOSTNAME=${TRAEFIK_HOSTNAME?}
+      - N8N_HOSTNAME=${N8N_HOSTNAME?}
+      - UPTIME_KUMA_HOSTNAME=${UPTIME_KUMA_HOSTNAME?}
+      - GLANCE_HOSTNAME=${GLANCE_HOSTNAME?}
+      - HOMEPAGE_HOSTNAME=${HOMEPAGE_HOSTNAME?}
+      - AUTHELIA_HOSTNAME=${AUTHELIA_HOSTNAME?}
+      - TZ=${TZ}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.glance.rule=Host(`${GLANCE_HOSTNAME?}`)"
+      - "traefik.http.routers.glance.entrypoints=websecure"
+      - "traefik.http.routers.glance.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.glance.middlewares=authelia@docker"
+      - "homepage.group=Dashboard"
+      - "homepage.name=Glance"
+      - "homepage.icon=mdi-view-dashboard"
+      - "homepage.href=https://${GLANCE_HOSTNAME?}"
+      - "homepage.description=Customizable Dashboard for Self-Hosted Services"
+    profiles:
+      - glance
+      - all

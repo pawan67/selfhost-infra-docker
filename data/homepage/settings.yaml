@@ -18,10 +18,7 @@ background:
   brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
   opacity: 50 # 0-100
 
-# ^^^^  add the above block
-providers:
-  openweathermap: openweathermapapikey
-  weatherapi: weatherapiapikey
+
 
 # Layout Configuration
 layout:
