@@ -14,6 +14,8 @@
 data/authelia
 data/traefik
 data/audiobookshelf
+data/uptime-kuma
+data/n8n
 
 
 

@@ -3,6 +3,8 @@ include:
   - apps/traefik/compose.yaml
   - apps/audiobookshelf/compose.yaml
   - apps/homepage/compose.yaml
+  - apps/n8n/compose.yaml
+  - apps/uptime-kuma/compose.yaml
 
 networks:
   default:
