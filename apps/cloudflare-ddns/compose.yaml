@@ -18,7 +18,8 @@ services:
         ${UPTIME_KUMA_HOSTNAME},
         ${N8N_HOSTNAME},
         ${GLANCE_HOSTNAME},
-        ${AUDIOBOOKSHELF_HOSTNAME}
+        ${AUDIOBOOKSHELF_HOSTNAME},
+        ${AFFINE_HOSTNAME}
         
 
     profiles:

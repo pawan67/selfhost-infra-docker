@@ -14,10 +14,10 @@ services:
       TEMPLATE_AUTHELIA_WEBAUTHN_DISPLAY_NAME: ${AUTHELIA_WEBAUTHN_DISPLAY_NAME?}
       TEMPLATE_AUTHELIA_JWT_SECRET: ${AUTHELIA_JWT_SECRET?}
       HOST_PUBLIC_IP: ${HOST_PUBLIC_IP?}
-
       # Add hostnames you want to publically available seperated by comma
       TEMPLATE_PUBLIC_HOSTNAMES: >-
-        ${AUDIOBOOKSHELF_HOSTNAME}
+        ${AUDIOBOOKSHELF_HOSTNAME},
+        ${AFFINE_HOSTNAME}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.authelia.rule=Host(`${AUTHELIA_HOSTNAME?}`)"

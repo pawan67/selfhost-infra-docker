@@ -161,6 +161,10 @@ pages:
               url: https://${AUTHELIA_HOSTNAME}
               icon: sh:authelia
               timeout: 5s
+            - title: Affine
+              url: https://${AFFINE_HOSTNAME}
+              icon: sh:affine
+              timeout: 5s
                
 theme:
   background-color: 50 1 6

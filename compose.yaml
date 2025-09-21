@@ -7,6 +7,7 @@ include:
   - apps/uptime-kuma/compose.yaml
   - apps/glance/compose.yaml
   - apps/cloudflare-ddns/compose.yaml
+  - apps/affine/compose.yaml
 
 networks:
   default:

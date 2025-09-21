@@ -15,6 +15,7 @@ services:
       - GLANCE_HOSTNAME=${GLANCE_HOSTNAME?}
       - HOMEPAGE_HOSTNAME=${HOMEPAGE_HOSTNAME?}
       - AUTHELIA_HOSTNAME=${AUTHELIA_HOSTNAME?}
+      - AFFINE_HOSTNAME=${AFFINE_HOSTNAME?}
       - TZ=${TZ}
     labels:
       - "traefik.enable=true"
