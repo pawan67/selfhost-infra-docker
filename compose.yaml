@@ -10,6 +10,7 @@ include:
   - apps/affine/compose.yaml
   - apps/beszel/compose.yaml
   - apps/f1_api/compose.yaml
+  - apps/aiostreams/compose.yaml
 
 networks:
   default:

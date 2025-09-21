@@ -1,0 +1,26 @@
+services:
+  aiostreams:
+    image: ghcr.io/viren070/aiostreams:${AIOSTREAMS_TAG:-latest}
+    container_name: aiostreams
+    restart: unless-stopped
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.aiostreams.rule=Host(`${AIOSTREAMS_HOSTNAME?}`)"
+      - "traefik.http.routers.aiostreams.entrypoints=websecure"
+      - "traefik.http.routers.aiostreams.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.aiostreams.middlewares=authelia@docker"
+      - "traefik.http.services.aiostreams.loadbalancer.server.port=${PORT}"
+      - "homepage.group=Media"
+      - "homepage.name=AIOStreams"
+      - "homepage.icon=mdi-play-box-multiple"
+      - "homepage.href=https://${AIOSTREAMS_HOSTNAME?}"
+      - "homepage.description=All-in-One Streaming Addon"
+    volumes:
+      - ${DOCKER_DATA_DIR}/aiostreams:/app/data
+    profiles:
+      - aiostreams
+      - all

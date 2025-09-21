@@ -202,6 +202,10 @@ pages:
               url: https://${BESZEL_HOSTNAME}
               icon: sh:beszel
               timeout: 5s
+            - title: AIOStreams
+              url: https://${AIOSTREAMS_HOSTNAME}
+              icon: auto-invert https://cdn.jsdelivr.net/gh/selfhst/icons/webp/aiostreams.webp
+              timeout: 5s
       - size: small
         widgets:  
           - type: custom-api

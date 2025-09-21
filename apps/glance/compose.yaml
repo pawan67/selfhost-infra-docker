@@ -18,6 +18,7 @@ services:
       - AFFINE_HOSTNAME=${AFFINE_HOSTNAME?}
       - BESZEL_HOSTNAME=${BESZEL_HOSTNAME?}
       - F1_API_HOSTNAME=${F1_API_HOSTNAME?}
+      - AIOSTREAMS_HOSTNAME=${AIOSTREAMS_HOSTNAME?}
       - TZ=${TZ}
     labels:
       - "traefik.enable=true"

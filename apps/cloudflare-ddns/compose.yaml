@@ -21,7 +21,8 @@ services:
         ${AUDIOBOOKSHELF_HOSTNAME},
         ${AFFINE_HOSTNAME},
         ${BESZEL_HOSTNAME},
-        ${F1_API_HOSTNAME}
+        ${F1_API_HOSTNAME},
+        ${AIOSTREAMS_HOSTNAME}
         
 
     profiles:

@@ -18,7 +18,7 @@ services:
       TEMPLATE_PUBLIC_HOSTNAMES: >-
         ${AUDIOBOOKSHELF_HOSTNAME},
         ${AFFINE_HOSTNAME},
-        ${GLANCE_HOSTNAME}
+        ${AIOSTREAMS_HOSTNAME}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.authelia.rule=Host(`${AUTHELIA_HOSTNAME?}`)"
