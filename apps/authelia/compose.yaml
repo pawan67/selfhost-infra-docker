@@ -17,7 +17,8 @@ services:
       # Add hostnames you want to publically available seperated by comma
       TEMPLATE_PUBLIC_HOSTNAMES: >-
         ${AUDIOBOOKSHELF_HOSTNAME},
-        ${AFFINE_HOSTNAME}
+        ${AFFINE_HOSTNAME},
+        ${GLANCE_HOSTNAME}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.authelia.rule=Host(`${AUTHELIA_HOSTNAME?}`)"

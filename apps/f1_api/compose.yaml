@@ -1,0 +1,25 @@
+services:
+  f1_api:
+    container_name: f1_api
+    image: skyallinott/f1_api:latest
+    restart: unless-stopped
+    ports:
+      - 4463:4463
+    environment:
+      - TIMEZONE=${TZ?}
+      - TRACK_COLOUR=#e5d486 # Specify desired track map color
+      - EVENT_DETAIL=main # Optional. main tracks qualis and races (inc. sprints), race tracks races. 
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.f1_api.rule=Host(`${F1_API_HOSTNAME?}`)"
+      - "traefik.http.routers.f1_api.entrypoints=websecure"
+      - "traefik.http.routers.f1_api.middlewares=authelia@docker"
+      - "traefik.http.routers.f1_api.tls.certresolver=letsencrypt"
+      - "homepage.group=Entertainment"
+      - "homepage.name=F1 API"
+      - "homepage.icon=mdi-speedometer"
+      - "homepage.href=https://${F1_API_HOSTNAME?}"
+      - "homepage.description=Formula"
+    profiles:
+      - f1_api
+      - all

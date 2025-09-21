@@ -9,6 +9,8 @@
 *.log
 **/*.log
 
+# Authelia 
+apps/authelia/config/notification.txt
 
 # Data folders
 data/authelia
@@ -17,6 +19,7 @@ data/audiobookshelf
 data/uptime-kuma
 data/n8n
 data/affine
-
+data/beszel
+data/beszel_agent_data
 
 

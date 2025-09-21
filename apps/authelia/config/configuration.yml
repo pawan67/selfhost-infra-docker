@@ -763,7 +763,7 @@ access_control:
         - "^/media/.*$"
         - "^/openapi/.*$"
       policy: "bypass"
-
+    
     - domain: '*.{{ env "TEMPLATE_DOMAIN" }}'
       networks:
         - '{{ env "HOST_PUBLIC_IP" }}/32'

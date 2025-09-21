@@ -16,6 +16,8 @@ services:
       - HOMEPAGE_HOSTNAME=${HOMEPAGE_HOSTNAME?}
       - AUTHELIA_HOSTNAME=${AUTHELIA_HOSTNAME?}
       - AFFINE_HOSTNAME=${AFFINE_HOSTNAME?}
+      - BESZEL_HOSTNAME=${BESZEL_HOSTNAME?}
+      - F1_API_HOSTNAME=${F1_API_HOSTNAME?}
       - TZ=${TZ}
     labels:
       - "traefik.enable=true"

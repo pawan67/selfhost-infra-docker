@@ -8,6 +8,8 @@ include:
   - apps/glance/compose.yaml
   - apps/cloudflare-ddns/compose.yaml
   - apps/affine/compose.yaml
+  - apps/beszel/compose.yaml
+  - apps/f1_api/compose.yaml
 
 networks:
   default:
