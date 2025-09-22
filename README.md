@@ -7,11 +7,8 @@ The stack is modular — you can add or remove services as you like.
 
 ## 🖼️ Screenshots
 
-### Homepage Dashboard
-![Homepage Dashboard](data/homepage/images/screenshot.png)
-
 ### Glance Overview
-![Glance Overview](apps/glance/screenshots/screenshot-1.png)
+![Glance Overview](apps/glance/screenshots/glance.png)
 
 ---
 

@@ -1,162 +1,32 @@
 pages:
   - name: Home
-    # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
-    
     columns:
       - size: small
         widgets:
-          - type: custom-api
-            height: 200px
-            title: Random Cat
-            cache: 2m
-            url: https://cataas.com/cat?width=300&json=true
-            template: |
-              <img style="border-radius:5px" src="{{ .JSON.String "url" }}"></img> 
-
-          - type: rss
-            limit: 10
-            collapse-after: 3
-            cache: 12h
-            feeds:
-              - url: https://selfh.st/rss/
-                title: selfh.st
-                limit: 4
-              - url: https://ciechanow.ski/atom.xml
-              - url: https://www.joshwcomeau.com/rss.xml
-                title: Josh Comeau
-              - url: https://samwho.dev/rss.xml
-              - url: https://ishadeed.com/feed.xml
-                title: Ahmad Shadeed
+          - type: clock
+            hour-format: 24h
+            timezones:
+              - timezone: Europe/Paris
+                label: Paris
+              - timezone: America/New_York
+                label: New York
+              - timezone: Asia/Tokyo
+                label: Tokyo
+          - type: server-stats
+            servers:
+              - type: local
+                name: Services
+          
+          - type: weather
+            units: metric
+            hour-format: 12h
+            location: Mumbai, India
+          - type: to-do
+          
 
               
 
 
-      - size: full
-        widgets:
-          - type: group
-            widgets:
-              - type: hacker-news
-              - type: lobsters
-
-
-          - type: videos
-            channels:
-              - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
-              - UCsBjURrPoezykLs9EqgamOA # Fireship
-              - UC68TLK0mAEzUyHx5x5k-S1Q # Jeff Nippard
-
-      - size: small
-        widgets:
-          - type: custom-api
-            title: F1 Next Race
-            cache: 5m
-            url: https://${F1_API_HOSTNAME}/f1/next_race/
-            template: |
-              <div class="flex flex-column gap-10">
-                {{ $session := index (.JSON.Array "race") 0 }}
-                <p class="size-h5">
-                  {{ .JSON.String "season" }}, Round {{ .JSON.String "round" }}
-                </p>
-
-                <div class="margin-block-4">
-                  <p class="color-highlight">{{ $session.String "raceName" }}</p>
-                  <p class="color-primary">
-                    <span>
-                      {{ .JSON.String "next_event.session" }}
-                    </span>
-                    {{ $datetime := .JSON.String "next_event.datetime" }}
-                    <span
-                      class="color-highlight"
-                      {{ parseRelativeTime "rfc3339" $datetime }}
-                    ></span>
-                  </p>
-                  <p class="size-h5">
-                    {{ .JSON.String "next_event.date" }} @  {{ .JSON.String "next_event.time" }}
-                  </p>
-
-                  <div style="margin-block: 1rem;">
-                    <img
-                      src="https://${F1_API_HOSTNAME}/f1/next_map/"
-                      onerror="this.style.display='none'"
-                      style="max-width: 100%; height: auto; border-radius: 8px;"
-                    />
-                  </div>
-
-                  <p class="color-highlight">
-                    Circuit Details
-                  </p>
-                  <p class="size-h6">
-                    Name: {{ $session.String "circuit.circuitName" }}
-                  </p>
-                  <p class="size-h6">
-                    Lap Record: {{ $session.String "circuit.lapRecord" }}, {{ $session.String "circuit.fastestLapDriverName" }} ({{ $session.String "circuit.fastestLapYear"}})
-                  </p>
-                  <p class="size-h6">
-                    Length: {{ $session.String "laps" }} laps @ {{ $session.String "circuit.circuitLengthKm" }} KMs
-                  </p>
-                </div>
-              </div>
-
-          - type: custom-api
-            title: Drivers Standings
-            cache: 5m
-            url: https://${F1_API_HOSTNAME}/f1/drivers_standings/
-            template: |
-              <ul class="list collapsible-container" data-collapse-after="3">
-                {{ range $i, $v := .JSON.Array "drivers" }}
-                <li class="flex items-center {{ if eq $i 0 }}color-primary{{ else if eq $i 1 }}color-highlight{{ end }}">
-                  <div class="grow min-width-0">
-                    <span>{{ .String "position" }}. {{ .String "surname" }} <img src="https://flagcdn.com/w20/{{ .String "flag" }}.png"
-                          alt=""
-                          style="width: 20px; height: 14px; object-fit: cover; vertical-align: middle"
-                          class="inline-block rounded-sm" /> </span>
-                    {{ $id := .String "teamId" }}
-                      <span class="size-h6">
-                        ( {{- if eq $id "red_bull" -}}Red Bull
-                        {{- else if eq $id "aston_martin" -}}Aston Martin
-                        {{- else if eq $id "mercedes" -}}Mercedes
-                        {{- else if eq $id "ferrari" -}}Ferrari
-                        {{- else if eq $id "mclaren" -}}McLaren
-                        {{- else if eq $id "williams" -}}Williams
-                        {{- else if eq $id "alpine" -}}Alpine
-                        {{- else if eq $id "haas" -}}Haas
-                        {{- else if eq $id "rb" -}}RB
-                        {{- else if eq $id "sauber" -}}Sauber
-                        {{- else -}}{{ $id }}{{- end -}})
-                      </span>
-                  </div>
-                  <span class="shrink-0 text-right">{{ .String "points" }}</span>
-                </li>
-                {{ end }}
-              </ul>
-
-          - type: custom-api
-            title: Constructors Standings
-            cache: 5m
-            url: https://${F1_API_HOSTNAME}/f1/constructors_standings/
-            template: |
-              <ul class="list collapsible-container" data-collapse-after="5">
-                {{ range $i, $v := .JSON.Array "constructors" }}
-                <li class="flex items-center {{ if eq $i 0 }}color-primary{{ else if eq $i 1 }}color-highlight{{ end }}">
-                  <span class="grow min-width-0">
-                    {{ .String "position" }}. {{ .String "team" }}<span style="margin-left: 2px;">
-                      <img src="https://flagcdn.com/w20/{{ .String "flag" }}.png"
-                          alt=""
-                          style="width: 20px; height: 14px; object-fit: cover; vertical-align: middle"
-                          class="inline-block rounded-sm" />
-                    </span>
-                  </span>
-                  <span class="shrink-0 text-right">{{ .String "points" }}</span>
-                </li>
-                {{ end }}
-              </ul>
-          
-
-# Dashboard
-  - name: Dashboard
-    hide-desktop-navigation: false
-    width: slim
-    columns:
       - size: full
         widgets:
           - type: search
@@ -206,96 +76,185 @@ pages:
               url: https://${AIOSTREAMS_HOSTNAME}
               icon: auto-invert https://cdn.jsdelivr.net/gh/selfhst/icons/webp/aiostreams.webp
               timeout: 5s
+          - type: group
+            widgets:
+              - type: hacker-news
+              - type: lobsters
+              - type: rss
+                limit: 10
+                collapse-after: 3
+                cache: 12h
+                feeds:
+                  - url: https://selfh.st/rss/
+                    title: selfh.st
+                    limit: 4
+                  - url: https://ciechanow.ski/atom.xml
+                  - url: https://www.joshwcomeau.com/rss.xml
+                    title: Josh Comeau
+                  - url: https://samwho.dev/rss.xml
+                  - url: https://www.reddit.com/r/ExperiencedDevs.rss
+                    title: r/ExperiencedDevs
+
       - size: small
-        widgets:  
-          - type: custom-api
-            title: Beszel Metrics
-            url: https://${BESZEL_HOSTNAME}/api/collections/systems/records
-            method: GET
-            options:
-              redirect-url: "" # You must use "" and http:// or https://
-            headers:
-              Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE3NTkwNTE1NDMsImlkIjoiYjNyN3k0ZHFhYWR2NWs5IiwicmVmcmVzaGFibGUiOnRydWUsInR5cGUiOiJhdXRoIn0.rv9Ig57rFFtwTQTanyp18BvzbSmNn9HqKEUBf0F67j4
-              Accept: application/json
-            template: |
-              {{ $redirect := .Options.StringOr "redirect-url" "" }}
-              {{ $newTab := .Options.BoolOr "in-new-tab" false }}
-              {{ $hideKernel := .Options.BoolOr "hide-kernel" true }}
-              {{ $hideUptime := .Options.BoolOr "hide-uptime" false }}
-              {{ $hideCPUInfo := .Options.BoolOr "hide-cpu-info" false }}
-              {{ $hideIP := .Options.BoolOr "hide-ip" true }}
-              {{ $collapsible := .Options.BoolOr "collapsible" false }}
-              {{ $items := .JSON.Array "items" }}
-              {{ range $items }}
-                {{ $info := .Get "info" }}
-                {{ $name := .String "name" }}
-                {{ $link := "" }}
-                {{ if ne $redirect "" }}
-                  {{ $link = printf "%s/system/%s" $redirect $name }}
-                {{ end }}
-                <div style="font-size: 1.15em;">
-                  {{ if eq (.String "status") "up" }}
-                    <span class="status-dot color-positive">●</span>
-                  {{ else }}
-                    <span class="status-dot color-negative">●</span>
-                  {{ end }}
-                  {{ if ne $redirect "" }}
-                    <a class="color-highlight text-truncate" href="{{ printf "%s/system/%s" $redirect $name | safeURL }}" {{ if $newTab }}target="_blank" rel="noopener"{{ end }}>
-                      {{ $name }}{{ if not $hideIP }} ({{ .String "host" }}){{ end }}
-                    </a>
-                  {{ else }}
-                    <span class="color-highlight text-truncate">
-                      {{ $name }}{{ if not $hideIP }} ({{ .String "host" }}){{ end }}
-                    </span>
-                  {{ end }}
-                </div>
-                {{ if $collapsible }}
-                  <details class="margin-top-5">
-                    <summary class="size-h5 color-subtle" style="cursor: pointer;">Metrics</summary>
-                    <div class="margin-top-5">
-                      {{ if not $hideKernel }}
-                        <p style="font-size: 1em;">Kernel: {{ $info.String "k" }}</p>
-                      {{ end }}
-                      {{ if not $hideUptime }}
-                        {{ $uptimeSec := $info.Float "u" }}
-                        {{ if ge $uptimeSec 86400.0 }}
-                          <p style="font-size: 1em;">Uptime: {{ printf "%.2f" (mul $uptimeSec 0.000011574) }}d</p>
-                        {{ else }}
-                          <p style="font-size: 1em;">Uptime: {{ printf "%.2f" (mul $uptimeSec 0.000277778) }}h</p>
-                        {{ end }}
-                      {{ end }}
-                      {{ if not $hideCPUInfo }}
-                        <p style="font-size: 1em;">CPU: {{ replaceAll "CPU " "" ($info.String "m") }}</p>
-                      {{ end }}
-                      <p style="font-size: 1em; margin-top: 0.5em;">📊 Cpu: {{ $info.Float "cpu" }}%</p>
-                      <p style="font-size: 1em;">🧠 Memory: {{ $info.Float "mp" }}%</p>
-                      <p style="font-size: 1em;">💾 Disk: {{ $info.Float "dp" }}%</p>
+
+        widgets:
+          - type: group
+            widgets:
+            - type: custom-api
+              title: F1 🏎️
+              cache: 5m
+              url: https://${F1_API_HOSTNAME}/f1/next_race/
+              template: |
+                <div class="flex flex-column gap-10">
+                  {{ $session := index (.JSON.Array "race") 0 }}
+                  <p class="size-h5">
+                    Next Race {{ .JSON.String "season" }}, Round {{ .JSON.String "round" }}
+                  </p>
+
+                  <div class="margin-block-4">
+                    <p class="color-highlight">{{ $session.String "raceName" }}</p>
+                    <p class="color-primary">
+                      <span>
+                        {{ .JSON.String "next_event.session" }}
+                      </span>
+                      {{ $datetime := .JSON.String "next_event.datetime" }}
+                      <span
+                        class="color-highlight"
+                        {{ parseRelativeTime "rfc3339" $datetime }}
+                      ></span>
+                    </p>
+                    <p class="size-h5">
+                      {{ .JSON.String "next_event.date" }} @  {{ .JSON.String "next_event.time" }}
+                    </p>
+
+                    <div style="margin-block: 1rem;">
+                      <img
+                        src="https://${F1_API_HOSTNAME}/f1/next_map/"
+                        onerror="this.style.display='none'"
+                        style="max-width: 100%; height: auto; border-radius: 8px;"
+                      />
                     </div>
-                  </details>
-                {{ else }}
-                  <div class="margin-top-5">
-                    {{ if not $hideKernel }}
-                      <p style="font-size: 1em;">Kernel: {{ $info.String "k" }}</p>
-                    {{ end }}
-                    {{ if not $hideUptime }}
-                      {{ $uptimeSec := $info.Float "u" }}
-                      {{ if ge $uptimeSec 86400.0 }}
-                        <p style="font-size: 1em;">Uptime: {{ printf "%.2f" (mul $uptimeSec 0.000011574) }}d</p>
-                      {{ else }}
-                        <p style="font-size: 1em;">Uptime: {{ printf "%.2f" (mul $uptimeSec 0.000277778) }}h</p>
-                      {{ end }}
-                    {{ end }}
-                    {{ if not $hideCPUInfo }}
-                      <p style="font-size: 1em;">CPU: {{ replaceAll "CPU " "" ($info.String "m") }}</p>
-                    {{ end }}
-                    <p style="font-size: 1em; margin-top: 0.5em;">📊 Cpu: {{ $info.Float "cpu" }}%</p>
-                    <p style="font-size: 1em;">🧠 Memory: {{ $info.Float "mp" }}%</p>
-                    <p style="font-size: 1em;">💾 Disk: {{ $info.Float "dp" }}%</p>
+
+                    <p class="color-highlight">
+                      Circuit Details
+                    </p>
+                    <p class="size-h6">
+                      Name: {{ $session.String "circuit.circuitName" }}
+                    </p>
+                    <p class="size-h6">
+                      Lap Record: {{ $session.String "circuit.lapRecord" }}, {{ $session.String "circuit.fastestLapDriverName" }} ({{ $session.String "circuit.fastestLapYear"}})
+                    </p>
+                    <p class="size-h6">
+                      Length: {{ $session.String "laps" }} laps @ {{ $session.String "circuit.circuitLengthKm" }} KMs
+                    </p>
                   </div>
+                </div>
+
+            - type: custom-api
+              title: Drivers Standings
+              cache: 5m
+              url: https://${F1_API_HOSTNAME}/f1/drivers_standings/
+              template: |
+                <ul class="list collapsible-container" data-collapse-after="3">
+                  {{ range $i, $v := .JSON.Array "drivers" }}
+                  <li class="flex items-center {{ if eq $i 0 }}color-primary{{ else if eq $i 1 }}color-highlight{{ end }}">
+                    <div class="grow min-width-0">
+                      <span>{{ .String "position" }}. {{ .String "surname" }} <img src="https://flagcdn.com/w20/{{ .String "flag" }}.png"
+                            alt=""
+                            style="width: 20px; height: 14px; object-fit: cover; vertical-align: middle"
+                            class="inline-block rounded-sm" /> </span>
+                      {{ $id := .String "teamId" }}
+                        <span class="size-h6">
+                          ( {{- if eq $id "red_bull" -}}Red Bull
+                          {{- else if eq $id "aston_martin" -}}Aston Martin
+                          {{- else if eq $id "mercedes" -}}Mercedes
+                          {{- else if eq $id "ferrari" -}}Ferrari
+                          {{- else if eq $id "mclaren" -}}McLaren
+                          {{- else if eq $id "williams" -}}Williams
+                          {{- else if eq $id "alpine" -}}Alpine
+                          {{- else if eq $id "haas" -}}Haas
+                          {{- else if eq $id "rb" -}}RB
+                          {{- else if eq $id "sauber" -}}Sauber
+                          {{- else -}}{{ $id }}{{- end -}})
+                        </span>
+                    </div>
+                    <span class="shrink-0 text-right">{{ .String "points" }}</span>
+                  </li>
+                  {{ end }}
+                </ul>
+
+            - type: custom-api
+              title: Constructors Standings
+              cache: 5m
+              url: https://${F1_API_HOSTNAME}/f1/constructors_standings/
+              template: |
+                <ul class="list collapsible-container" data-collapse-after="5">
+                  {{ range $i, $v := .JSON.Array "constructors" }}
+                  <li class="flex items-center {{ if eq $i 0 }}color-primary{{ else if eq $i 1 }}color-highlight{{ end }}">
+                    <span class="grow min-width-0">
+                      {{ .String "position" }}. {{ .String "team" }}<span style="margin-left: 2px;">
+                        <img src="https://flagcdn.com/w20/{{ .String "flag" }}.png"
+                            alt=""
+                            style="width: 20px; height: 14px; object-fit: cover; vertical-align: middle"
+                            class="inline-block rounded-sm" />
+                      </span>
+                    </span>
+                    <span class="shrink-0 text-right">{{ .String "points" }}</span>
+                  </li>
+                  {{ end }}
+                </ul>
+          - type: custom-api
+            title: Spotify Recent Tracks
+            cache: 60s
+            url: http://ws.audioscrobbler.com/2.0/
+            parameters:
+              method: user.getRecentTracks
+              user: pawan67
+              api_key: 0e8fda9d7375735768c9760478e42e59
+              format: json
+              limit: 3
+            template: |
+              <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
+                {{ range .JSON.Array "recenttracks.track" }}
+                  <li class="flex items-center gap-10">
+                    <img src={{ .String "image.2.#text" }} style="border-radius: 5px; min-width: 5rem; max-width: 5rem;" class="card">
+                    <div class="flex-1">
+                      <p class="color-positive size-h5">{{ .String "artist.#text" }}</p>
+                      <p class="size-h5">{{ .String "name" }}</p>
+                      <p class="size-h6">
+                        {{ if .String "@attr.nowplaying" }}
+                          <span class="color-positive">Now playing</span>
+                        {{ else }}
+                          <span class="color-subdue" {{ .String "date.#text" | parseRelativeTime "02 Jan 2006, 15:04" }}></span>
+                        {{ end }}
+                      </p>
+                    </div>
+                  </li>
                 {{ end }}
-              {{ end }}
-               
+              </ul>
+          
+
+            
 theme:
-  background-color: 50 1 6
-  primary-color: 24 97 58
-  negative-color: 209 88 54
+  background-color: 216 27.8 6
+  primary-color: 214 92.8 70
+  positive-color: 129 41 42.5
+  negative-color: 6 96 59
+  color-multiplier: 2
+
+  presets:
+    dark:
+      background-color: 90 25 3
+      primary-color: 77 23.8 70.2
+      positive-color: 77 23.8 50.6
+      negative-color: 6 96 59
+      color-multiplier: 1
+
+    zebra:
+      light: true
+      background-color: 0 0 95
+      primary-color: 0 0 10
+      negative-color: 0 90 50
+
+
+
