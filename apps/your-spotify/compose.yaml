@@ -1,0 +1,45 @@
+services:
+  server:
+    container_name: your-spotify
+    image: yooooomi/your_spotify_server
+    restart: always
+    ports:
+      - "8080:8080"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    environment:
+      API_ENDPOINT: ${YOUR_SPOTIFY_SERVER_HOSTNAME} # This MUST be included as a valid URL in the spotify dashboard
+      CLIENT_ENDPOINT: ${YOUR_SPOTIFY_CLIENT_HOSTNAME?} # This MUST be included as a valid URL in the spotify dashboard
+      SPOTIFY_PUBLIC: fb585f9a8a6640a090157490e491e849
+      SPOTIFY_SECRET: a556abcfb10a401cbd9007db7dda16e6
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.your-spotify.rule=Host(`${YOUR_SPOTIFY_SERVER_HOSTNAME?}`)"
+      - "traefik.http.routers.your-spotify.entrypoints=websecure"
+      - "traefik.http.routers.your-spotify.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.your-spotify.middlewares=authelia@docker"
+      - "traefik.http.services.your-spotify.loadbalancer.server.port=8080"
+
+  mongo:
+    container_name: mongo
+    image: mongo:6
+    restart: always
+    volumes:
+      - ${DOCKER_DATA_DIR}/your_spotify_db:/data/db
+
+  web:
+    image: yooooomi/your_spotify_client
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      API_ENDPOINT: ${YOUR_SPOTIFY_SERVER_HOSTNAME?}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.your-spotify-web.rule=Host(`${YOUR_SPOTIFY_CLIENT_HOSTNAME?}`)"
+      - "traefik.http.routers.your-spotify-web.entrypoints=websecure"
+      - "traefik.http.routers.your-spotify-web.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.your-spotify-web.middlewares=authelia@docker"
+      - "traefik.http.services.your-spotify-web.loadbalancer.server.port=3000"

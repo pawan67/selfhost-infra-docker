@@ -76,6 +76,10 @@ pages:
               url: https://${AIOSTREAMS_HOSTNAME}
               icon: auto-invert https://cdn.jsdelivr.net/gh/selfhst/icons/webp/aiostreams.webp
               timeout: 5s
+            - title: Your Spotify
+              url: https://${YOUR_SPOTIFY_CLIENT_HOSTNAME}
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/your-spotify-light.webp
+              timeout: 5s
           - type: group
             widgets:
               - type: hacker-news
@@ -257,4 +261,6 @@ theme:
       negative-color: 0 90 50
 
 
-
+server:
+  port: 8081
+  

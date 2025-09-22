@@ -11,6 +11,7 @@ include:
   - apps/beszel/compose.yaml
   - apps/f1_api/compose.yaml
   - apps/aiostreams/compose.yaml
+  - apps/your-spotify/compose.yaml
 
 networks:
   default:

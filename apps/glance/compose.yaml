@@ -6,7 +6,7 @@ services:
     volumes:
       - ./config:/app/config
     ports:
-      - 8080:8080
+      - 8081:8081
     environment:
       - AUDIOBOOKSHELF_HOSTNAME=${AUDIOBOOKSHELF_HOSTNAME?}
       - TRAEFIK_HOSTNAME=${TRAEFIK_HOSTNAME?}
@@ -19,6 +19,8 @@ services:
       - BESZEL_HOSTNAME=${BESZEL_HOSTNAME?}
       - F1_API_HOSTNAME=${F1_API_HOSTNAME?}
       - AIOSTREAMS_HOSTNAME=${AIOSTREAMS_HOSTNAME?}
+      - YOUR_SPOTIFY_CLIENT_HOSTNAME=${YOUR_SPOTIFY_CLIENT_HOSTNAME?}
+      - PORT=8081
       - TZ=${TZ}
     labels:
       - "traefik.enable=true"
@@ -26,6 +28,7 @@ services:
       - "traefik.http.routers.glance.entrypoints=websecure"
       - "traefik.http.routers.glance.tls.certresolver=letsencrypt"
       - "traefik.http.routers.glance.middlewares=authelia@docker"
+      - "traefik.http.services.glance.loadbalancer.server.port=8081"
       - "homepage.group=Dashboard"
       - "homepage.name=Glance"
       - "homepage.icon=mdi-view-dashboard"

@@ -8,7 +8,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${DOCKER_DATA_DIR}/homepage/images:/app/public/images
     expose:
-      - 3000
+      - 3012
     environment:
       HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_HOSTNAME?}
     labels:

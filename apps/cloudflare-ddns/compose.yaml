@@ -22,7 +22,9 @@ services:
         ${AFFINE_HOSTNAME},
         ${BESZEL_HOSTNAME},
         ${F1_API_HOSTNAME},
-        ${AIOSTREAMS_HOSTNAME}
+        ${AIOSTREAMS_HOSTNAME},
+        ${YOUR_SPOTIFY_CLIENT_HOSTNAME},
+        ${YOUR_SPOTIFY_SERVER_HOSTNAME}
         
 
     profiles:
