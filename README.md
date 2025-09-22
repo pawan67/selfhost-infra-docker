@@ -5,10 +5,10 @@ It uses **Traefik** as a reverse proxy and **Authelia** for authentication.
 
 The stack is modular — you can add or remove services as you like.
 
-## 🖼️ Screenshots
+## Screenshots
 
 ### Glance Overview
-![Glance Overview](apps/glance/screenshots/glance.png)
+![Glance Overview](apps/glance/screenshots/glance-green-dark.png)
 
 ---
 
