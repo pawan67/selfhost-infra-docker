@@ -24,7 +24,8 @@ services:
         ${F1_API_HOSTNAME},
         ${AIOSTREAMS_HOSTNAME},
         ${YOUR_SPOTIFY_CLIENT_HOSTNAME},
-        ${YOUR_SPOTIFY_SERVER_HOSTNAME}
+        ${YOUR_SPOTIFY_SERVER_HOSTNAME},
+        ${OPENWEBUI_HOSTNAME}
         
 
     profiles:

@@ -4,9 +4,9 @@ services:
     container_name: homepage
     restart: unless-stopped
     volumes:
-      - ${DOCKER_DATA_DIR}/homepage:/app/config
+      - ./data:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${DOCKER_DATA_DIR}/homepage/images:/app/public/images
+      - ./data/images:/app/public/images
     expose:
       - 3012
     environment:

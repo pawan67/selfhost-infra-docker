@@ -12,6 +12,7 @@ include:
   - apps/f1_api/compose.yaml
   - apps/aiostreams/compose.yaml
   - apps/your-spotify/compose.yaml
+  - apps/open-webui/compose.yaml
 
 networks:
   default:

@@ -66,7 +66,7 @@ pages:
               timeout: 5s
             - title: Affine
               url: https://${AFFINE_HOSTNAME}
-              icon: sh:affine
+              icon: auto-invert sh:affine
               timeout: 5s
             - title: Beszel
               url: https://${BESZEL_HOSTNAME}
@@ -80,6 +80,9 @@ pages:
               url: https://${YOUR_SPOTIFY_CLIENT_HOSTNAME}
               icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/your-spotify-light.webp
               timeout: 5s
+            - title: Open WebUI
+              url: https://${OPENWEBUI_HOSTNAME}
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/open-webui.webp
           - type: group
             widgets:
               - type: hacker-news
@@ -105,7 +108,7 @@ pages:
           - type: group
             widgets:
             - type: custom-api
-              title: F1 🏎️
+              title: F1 NEXT RACE
               cache: 5m
               url: https://${F1_API_HOSTNAME}/f1/next_race/
               template: |
@@ -187,26 +190,6 @@ pages:
                   {{ end }}
                 </ul>
 
-            - type: custom-api
-              title: Constructors Standings
-              cache: 5m
-              url: https://${F1_API_HOSTNAME}/f1/constructors_standings/
-              template: |
-                <ul class="list collapsible-container" data-collapse-after="5">
-                  {{ range $i, $v := .JSON.Array "constructors" }}
-                  <li class="flex items-center {{ if eq $i 0 }}color-primary{{ else if eq $i 1 }}color-highlight{{ end }}">
-                    <span class="grow min-width-0">
-                      {{ .String "position" }}. {{ .String "team" }}<span style="margin-left: 2px;">
-                        <img src="https://flagcdn.com/w20/{{ .String "flag" }}.png"
-                            alt=""
-                            style="width: 20px; height: 14px; object-fit: cover; vertical-align: middle"
-                            class="inline-block rounded-sm" />
-                      </span>
-                    </span>
-                    <span class="shrink-0 text-right">{{ .String "points" }}</span>
-                  </li>
-                  {{ end }}
-                </ul>
           - type: custom-api
             title: Spotify Recent Tracks
             cache: 60s
@@ -216,7 +199,7 @@ pages:
               user: pawan67
               api_key: 0e8fda9d7375735768c9760478e42e59
               format: json
-              limit: 3
+              limit: 4
             template: |
               <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
                 {{ range .JSON.Array "recenttracks.track" }}
@@ -240,18 +223,17 @@ pages:
 
             
 theme:
-  background-color: 216 27.8 6
-  primary-color: 214 92.8 70
+  background-color: 216 27.8 4.5
+  primary-color: 214 92.8 80
   positive-color: 129 41 42.5
-  negative-color: 6 96 59
-  color-multiplier: 2
+  negative-color: 6 96 90
+  color-multiplier: 5
 
   presets:
     dark:
-      background-color: 90 25 3
-      primary-color: 77 23.8 70.2
+      background-color: 90 25 4
+      primary-color: 77 23.8 60.2
       positive-color: 77 23.8 50.6
-      negative-color: 6 96 59
       color-multiplier: 1
 
     zebra:

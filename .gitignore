@@ -8,20 +8,14 @@
 # Ignore logs
 *.log
 **/*.log
+*.logs
+**/*.logs
+**/logs
 
 # Authelia 
 apps/authelia/config/notification.txt
 
 # Data folders
-data/authelia
-data/traefik
-data/audiobookshelf
-data/uptime-kuma
-data/n8n
-data/affine
-data/beszel
-data/beszel_agent_data
-data/aiostreams
-data/your_spotify_db
+data
 
 
