@@ -40,17 +40,86 @@ pages:
               - title: Github
                 shortcut: "!gh"
                 url: https://github.com/search?q=!{query}
+          - type: group
+            widgets:
+            - type: monitor
+              cache: 1m
+              title: Quick Links
+              sites:
+              - title: Reddit
+                url: https://reddit.com
+                icon: sh:reddit
+                timeout: 5s
+              - title: YouTube
+                url: https://youtube.com
+                icon: sh:youtube
+                timeout: 5s
+              - title: GitHub
+                url: https://github.com
+                icon: sh:github
+                timeout: 5s
+              - title: ChatGPT
+                url: https://chat.openai.com
+                icon: sh:openai
+                timeout: 5s
+              - title: Twitter
+                url: https://twitter.com
+                icon: sh:twitter
+                timeout: 5s
+              - title: Gmail
+                url: https://mail.google.com
+                icon: sh:gmail
+                timeout: 5s
+            - type: monitor
+              cache: 1m
+              title: All Services
+              sites:
+              - title: Audiobookshelf
+                url: https://${AUDIOBOOKSHELF_HOSTNAME}
+                icon: sh:audiobookshelf
+                timeout: 5s
+              - title: Traefik Dashboard
+                url: https://${TRAEFIK_HOSTNAME}/dashboard/
+                icon: sh:traefik
+                timeout: 5s
+              - title: n8n
+                url: https://${N8N_HOSTNAME}
+                icon: sh:n8n
+                timeout: 5s
+              - title: Uptime Kuma
+                url: https://${UPTIME_KUMA_HOSTNAME}
+                icon: sh:uptime-kuma
+                timeout: 5s
+              - title: Authelia
+                url: https://${AUTHELIA_HOSTNAME}
+                icon: sh:authelia
+                timeout: 5s
+              - title: Affine
+                url: https://${AFFINE_HOSTNAME}
+                icon: auto-invert sh:affine
+                timeout: 5s
+              - title: Beszel
+                url: https://${BESZEL_HOSTNAME}
+                icon: sh:beszel
+                timeout: 5s
+              - title: AIOStreams
+                url: https://${AIOSTREAMS_HOSTNAME}
+                icon: auto-invert https://cdn.jsdelivr.net/gh/selfhst/icons/webp/aiostreams.webp
+                timeout: 5s
+              - title: Your Spotify
+                url: https://${YOUR_SPOTIFY_CLIENT_HOSTNAME}
+                icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/your-spotify-light.webp
+                timeout: 5s
+              - title: Open WebUI
+                url: https://${OPENWEBUI_HOSTNAME}
+                icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/open-webui.webp
           - type: monitor
             cache: 1m
-            title: Services
+            title: Self Hosted
             sites:
             - title: Audiobookshelf
               url: https://${AUDIOBOOKSHELF_HOSTNAME}
               icon: sh:audiobookshelf
-              timeout: 5s
-            - title: Traefik Dashboard
-              url: https://${TRAEFIK_HOSTNAME}/dashboard/
-              icon: sh:traefik
               timeout: 5s
             - title: n8n
               url: https://${N8N_HOSTNAME}
@@ -60,10 +129,6 @@ pages:
               url: https://${UPTIME_KUMA_HOSTNAME}
               icon: sh:uptime-kuma
               timeout: 5s
-            - title: Authelia
-              url: https://${AUTHELIA_HOSTNAME}
-              icon: sh:authelia
-              timeout: 5s
             - title: Affine
               url: https://${AFFINE_HOSTNAME}
               icon: auto-invert sh:affine
@@ -71,10 +136,6 @@ pages:
             - title: Beszel
               url: https://${BESZEL_HOSTNAME}
               icon: sh:beszel
-              timeout: 5s
-            - title: AIOStreams
-              url: https://${AIOSTREAMS_HOSTNAME}
-              icon: auto-invert https://cdn.jsdelivr.net/gh/selfhst/icons/webp/aiostreams.webp
               timeout: 5s
             - title: Your Spotify
               url: https://${YOUR_SPOTIFY_CLIENT_HOSTNAME}
@@ -231,10 +292,10 @@ theme:
 
   presets:
     dark:
-      background-color: 90 25 4
-      primary-color: 77 23.8 60.2
+      background-color: 90 25 4.5
+      primary-color: 77 23.8 55
       positive-color: 77 23.8 50.6
-      color-multiplier: 1
+      color-multiplier: 1.7
 
     zebra:
       light: true
