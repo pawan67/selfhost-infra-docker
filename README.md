@@ -8,7 +8,7 @@ The stack is modular — you can add or remove services as you like.
 ## Screenshots
 
 ### Glance Overview
-![Glance Overview](apps/glance/screenshots/glance-green-dark.png)
+![Glance Overview](apps/glance/screenshots/glance-green.png)
 
 ---
 
