@@ -144,6 +144,14 @@ pages:
             - title: Open WebUI
               url: https://${OPENWEBUI_HOSTNAME}
               icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/open-webui.webp
+            - title: Kavita
+              url: https://${KAVITA_HOSTNAME}
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/kavita.webp
+              timeout: 5s
+            - title: HomePage
+              url: https://${HOMEPAGE_HOSTNAME}
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons/webp/homepage.webp
+              timeout: 5s
           - type: group
             widgets:
               - type: hacker-news

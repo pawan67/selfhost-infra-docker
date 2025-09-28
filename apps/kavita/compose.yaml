@@ -1,0 +1,30 @@
+---
+services:
+  kavita:
+    image: lscr.io/linuxserver/kavita:latest
+    container_name: kavita
+    environment:
+      - PUID=${PUID?}
+      - PGID=${PGID?}
+      - TZ=${TZ?}
+    volumes:
+      - ${DOCKER_DATA_DIR}/kavita/config:/config
+      - ${DOCKER_DATA_DIR}/kavita/data:/data
+    ports:
+      - 5000:5000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kavita.rule=Host(`${KAVITA_HOSTNAME?}`)"
+      - "traefik.http.routers.kavita.entrypoints=websecure"
+      - "traefik.http.routers.kavita.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.kavita.middlewares=authelia@docker"
+      - "traefik.http.services.kavita.loadbalancer.server.port=5000"
+      - "homepage.group=Media"
+      - "homepage.name=Kavita"
+      - "homepage.icon=mdi-book-open-page-variant"
+      - "homepage.href=https://${KAVITA_HOSTNAME?}"
+      - "homepage.description=Digital Comics and Ebooks Library"
+    profiles:
+      - kavita
+      - all
+    restart: unless-stopped

@@ -26,6 +26,7 @@ services:
         ${YOUR_SPOTIFY_CLIENT_HOSTNAME},
         ${YOUR_SPOTIFY_SERVER_HOSTNAME},
         ${OPENWEBUI_HOSTNAME}
+        ${KAVITA_HOSTNAME}
         
 
     profiles:

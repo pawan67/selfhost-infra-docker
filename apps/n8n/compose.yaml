@@ -14,7 +14,7 @@ services:
       - N8N_PROTOCOL=https
       - N8N_RUNNERS_ENABLED=true
       - NODE_ENV=production
-      - WEBHOOK_URL=${N8N_HOSTNAME?}
+      - WEBHOOK_URL=https://${N8N_HOSTNAME?}
       - GENERIC_TIMEZONE=${TZ}
       - TZ=${TZ}
     labels:

@@ -13,6 +13,7 @@ include:
   - apps/aiostreams/compose.yaml
   - apps/your-spotify/compose.yaml
   - apps/open-webui/compose.yaml
+  - apps/kavita/compose.yaml
 
 networks:
   default:
